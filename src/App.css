@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Macondo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zain:wght@200;300;400;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Epilogue:ital,wght@0,100..900;1,100..900&family=Satisfy&display=swap');
+
+.righteous-regular{
+    font-family: 'Righteous', sans-serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+}
+
+.permanent-marker-regular{
+    font-family: "Permanent Marker", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.macondo-regular {
+    font-family: "Macondo", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .kalam-light {
+    font-family: "Kalam", cursive;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .kalam-regular {
+    font-family: "Kalam", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .kalam-bold {
+    font-family: "Kalam", cursive;
+    font-weight: 700;
+    font-style: normal;
+  }  
+
+  .zain-extralight {
+    font-family: "Zain", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  .zain-light {
+    font-family: "Zain", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .zain-regular {
+    font-family: "Zain", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .zain-bold {
+    font-family: "Zain", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .zain-extrabold {
+    font-family: "Zain", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+  .zain-black {
+    font-family: "Zain", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  .satisfy-regular {
+    font-family: "Satisfy", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .baskervville-regular {
+    font-family: "Baskervville", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .baskervville-regular-italic {
+    font-family: "Baskervville", serif;
+    font-weight: 400;
+    font-style: italic;
+  }  
+
+.epilogue-regular {
+  font-family: "Epilogue", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.epilogue-semibold {
+  font-family: "Epilogue", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.epilogue-bold {
+  font-family: "Epilogue", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.bounce{
+    animation: mouseAnimation 1s infinite;
+}
+
+@keyframes mouseAnimation{
+    0% {
+        transform: scale(-1) translateY(0);
+    }
+    10% {
+        transform: scale(-1.1, -0.9) translateY(0);
+    }
+    30% {
+        transform: scale(-0.9, -1.1) translateY(-.5em);
+    }
+    50% {
+        transform: scale(-1.05, -0.95) translateY(0);
+    }
+    57% {
+        transform: scale(-1) translateY(-.125em);
+    }
+    64% {
+        transform: scale(-1) translateY(0);
+    }
+    100% {
+        transform: scale(-1) translateY(0);
+    }
+}
+
+@keyframes gradientAnimation{
+  0%{
+    background-position: 0% 50%;
+  }
+
+  50%{
+    background-position: 100% 50%;
+  }
+
+  100%{
+    background-position: 0% 50%;
+  }
+}
+
+.btn:hover{
+  background-color: hsla(0, 0%, 98%, 0.1);
+}
+
+body, nav button{
+  cursor: none;
+}
