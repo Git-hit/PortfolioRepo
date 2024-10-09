@@ -97,12 +97,15 @@ export default function Home(){
             hideText();
         }
     }
+
+    const scrollMinify = false;
+    console.log(scrollMinify)
     return (
         (<div onMouseMove={handleMouseMoveOverText} className="h-screen">
             <div ref={cursorCircle} style={{transform: 'translate(-50%, -50%)', top: '0', left: '0'}} className="z-[1] fixed pointer-events-none cursorCircle transition-all duration-200 bg-[#6bd490] rounded-full h-5 w-5 stroke-black stroke-2"></div>
             <Navbar />
             <div className="flex flex-row">
-                <div className="flex flex-col relative text-white mt-28" style={{width: `calc(100% - ${Math.min(ScrollY, 50)}%)`}}>
+                <div className="flex flex-col relative text-white mt-28" style={{width: `calc(100% - ${scrollMinify ? Math.min(ScrollY, 50) : '0'}%)`}}>
                     <motion.div variants={variantsContainer} initial="hidden" animate="visible" className="text-to-change epilogue-bold text-[84px] text-center leading-none">
                         <motion.span className="inline-block span-to-change" variants={spanMotion}>Meet your next</motion.span>
                         <br />
@@ -137,7 +140,7 @@ export default function Home(){
                         ))}
                     </motion.div>
                 </div>
-                <div style={{width: `${Math.min(ScrollY, 50)}%`}}> 
+                <div style={{width: `${scrollMinify ? Math.min(ScrollY, 50) : '0'}%`}}> 
                 </div>
             </div>
         </div>)
