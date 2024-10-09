@@ -99,7 +99,6 @@ export default function Home(){
     }
 
     const scrollMinify = false;
-    console.log(scrollMinify)
     return (
         (<div onMouseMove={handleMouseMoveOverText} className="h-screen">
             <div ref={cursorCircle} style={{transform: 'translate(-50%, -50%)', top: '0', left: '0'}} className="z-[1] fixed pointer-events-none cursorCircle transition-all duration-200 bg-[#6bd490] rounded-full h-5 w-5 stroke-black stroke-2"></div>
