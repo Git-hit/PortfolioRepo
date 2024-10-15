@@ -8,7 +8,8 @@ export default function Home(){
     let cursorCircle = useRef();
     let clipPathElement = useRef(null);
     let animationFrameId = useRef(null);
-    const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+    // const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+    const cursorPosition = useRef({x: 0, y: 0});
 
     function showHidden(){
         if(!hoveredRef.current){
@@ -31,13 +32,19 @@ export default function Home(){
         const delta = e.deltaY;
         setScrollY((prev) => {
             let newValue = prev + delta * 0.1;
-            newValue = Math.max(0, Math.min(100, newValue));
+            newValue = Math.max(0, Math.min(160, newValue));
+            // console.log(Math.max(2, newValue / 1.6));
             return newValue;
         });
     }
-    
+
     function setCursor(e){
-        setCursorPosition({ x: e.clientX, y: e.clientY });
+        cursorPosition.current = {x: e.clientX, y: e.clientY};
+        if(hoveredRef.current){
+            clipPathElement.current.style.clipPath = `circle(150px at ${cursorPosition.current.x}px ${cursorPosition.current.y + window.scrollY - 260}px)`;
+        } else{
+            clipPathElement.current.style.clipPath = 'circle(0px)';
+        }
         if(animationFrameId.current){
             cancelAnimationFrame(animationFrameId.current)
         }
@@ -75,7 +82,7 @@ export default function Home(){
             if(animationFrameId.current){
                 cancelAnimationFrame(animationFrameId.current);
             }
-            };
+        };
     }, [])
 
     const variantsContainer = {
@@ -97,16 +104,14 @@ export default function Home(){
             hideText();
         }
     }
-
-    const scrollMinify = false;
     return (
-        (<div onMouseMove={handleMouseMoveOverText} className="h-screen">
+        <div onMouseMove={handleMouseMoveOverText} className="relative h-[280vh]">
             <div ref={cursorCircle} style={{transform: 'translate(-50%, -50%)', top: '0', left: '0'}} className="z-[1] fixed pointer-events-none cursorCircle transition-all duration-200 bg-[#6bd490] rounded-full h-5 w-5 stroke-black stroke-2"></div>
             <Navbar />
-            <div className="flex flex-row">
-                <div className="flex flex-col relative text-white mt-28" style={{width: `calc(100% - ${scrollMinify ? Math.min(ScrollY, 50) : '0'}%)`}}>
+            <div className="flex flex-col">
+                <div className="flex flex-col relative text-white mt-28">
                     <motion.div variants={variantsContainer} initial="hidden" animate="visible" className="text-to-change epilogue-bold text-[84px] text-center leading-none">
-                        <motion.span className="inline-block span-to-change" variants={spanMotion}>Meet your next</motion.span>
+                        <motion.span className="inline-block span-to-change" variants={spanMotion}>Hire me as your next</motion.span>
                         <br />
                         <span>
                             <motion.span className="inline-block span-to-change" variants={spanMotion} style={{animation: 'gradientAnimation 10s infinite', backgroundSize: '200% 200%', WebkitTextFillColor: 'transparent', backgroundClip: 'text', backgroundImage: 'linear-gradient(90deg, #d66761 16.66666%, #f5c0b2 33.33333%, #aee8fa 50%, #68bde7 66.66666%, #6bd490 83.33333%, #a2f6cf)'}}>creative</motion.span>
@@ -118,7 +123,7 @@ export default function Home(){
                         className="z-[2] absolute left-1/2 w-full -translate-x-1/2 flex justify-center"
                         style={{
                             pointerEvents: 'none',
-                            clipPath: `circle(${hoveredRef.current ? `150px at ${cursorPosition.x}px ${cursorPosition.y - 260}px` : '0px'})`
+                            clipPath: 'circle(0px)'
                        }}
                     >
                         <div className="text-[84px] text-center leading-none epilogue-bold text-black">
@@ -131,17 +136,27 @@ export default function Home(){
                         {[...Array(3)].map((_, i) => (
                             <motion.div
                             key={i}
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: [0.5, 2, 0.5], opacity: [0.5, 1, 0] }}
+                            initial={i == 2 ? {scale: 0.5, opacity: 1} : { scale: 0, opacity: 0 }}
+                            animate={i == 2 ? {scale: 0.5, opacity: 1} : {scale: [0.5, 2, 0.5], opacity: [0.5, 1, 0.5]}}
                             transition={{ delay: i * 0.5, duration: 3, repeat: Infinity }}
                             className="absolute w-24 h-24 rounded-full border-4 border-white"
+                            style={{
+                                top: `${Math.min(ScrollY, 80 * i)}vh`,
+                            }}
                             />
                         ))}
                     </motion.div>
                 </div>
-                <div style={{width: `${scrollMinify ? Math.min(ScrollY, 50) : '0'}%`}}> 
+                <div 
+                    className="absolute w-full h-[100vh] bottom-0 z-50 gridContainer"
+                    style={{
+                        opacity: `${ScrollY >= 120 ? '1' : '0'}`
+                    }}>
+                    {Array.from({ length: 1200 }).map((_, i) => (
+                        <div key={i} className="border border-white"></div>
+                    ))}
                 </div>
             </div>
-        </div>)
+        </div>
     );
 }
