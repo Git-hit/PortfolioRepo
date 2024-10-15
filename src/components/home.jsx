@@ -8,7 +8,6 @@ export default function Home(){
     let cursorCircle = useRef();
     let clipPathElement = useRef(null);
     let animationFrameId = useRef(null);
-    // const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
     const cursorPosition = useRef({x: 0, y: 0});
 
     function showHidden(){
@@ -32,8 +31,7 @@ export default function Home(){
         const delta = e.deltaY;
         setScrollY((prev) => {
             let newValue = prev + delta * 0.1;
-            newValue = Math.max(0, Math.min(160, newValue));
-            // console.log(Math.max(2, newValue / 1.6));
+            newValue = Math.max(0, Math.min(200, newValue));
             return newValue;
         });
     }
@@ -104,6 +102,19 @@ export default function Home(){
             hideText();
         }
     }
+
+    useEffect(() => {
+        const handleWheel = (e) => {
+            if(e.deltaY < 0 && ScrollY <= 200 && ScrollY >= 160){
+                e.preventDefault();
+            }
+        };
+        window.addEventListener('wheel', handleWheel, {passive: false})
+
+        return() => {
+            window.removeEventListener('wheel', handleWheel)
+        }
+    }, [ScrollY])
     return (
         <div onMouseMove={handleMouseMoveOverText} className="relative h-[280vh]">
             <div ref={cursorCircle} style={{transform: 'translate(-50%, -50%)', top: '0', left: '0'}} className="z-[1] fixed pointer-events-none cursorCircle transition-all duration-200 bg-[#6bd490] rounded-full h-5 w-5 stroke-black stroke-2"></div>
@@ -150,7 +161,9 @@ export default function Home(){
                 <div 
                     className="absolute w-full h-[100vh] bottom-0 z-50 gridContainer"
                     style={{
-                        opacity: `${ScrollY >= 120 ? '1' : '0'}`
+                        opacity: `${ScrollY >= 160 ? '1' : '0'}`,
+                        // clipPath: `circle(${Math.max(2, ScrollY / 1.6)}% at center)`
+                        clipPath: `circle(${ScrollY >= 160 ? ((ScrollY - 160) / 40) * 98 + 2 : 2}% at center)`
                     }}>
                     {Array.from({ length: 1200 }).map((_, i) => (
                         <div key={i} className="border border-white"></div>
