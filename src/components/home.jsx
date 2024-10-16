@@ -116,17 +116,17 @@ export default function Home(){
         }
     }, [ScrollY])
     return (
-        <div onMouseMove={handleMouseMoveOverText} className="relative h-[280vh]">
+        <div onMouseMove={handleMouseMoveOverText} className="relative overflow-hidden h-[280vh]">
             <div ref={cursorCircle} style={{transform: 'translate(-50%, -50%)', top: '0', left: '0'}} className="z-[1] fixed pointer-events-none cursorCircle transition-all duration-200 bg-[#6bd490] rounded-full h-5 w-5 stroke-black stroke-2"></div>
             <Navbar />
             <div className="flex flex-col">
                 <div className="flex flex-col relative text-white mt-28">
                     <motion.div variants={variantsContainer} initial="hidden" animate="visible" className="text-to-change epilogue-bold text-[84px] text-center leading-none">
-                        <motion.span className="inline-block span-to-change" variants={spanMotion}>Hire me as your next</motion.span>
+                        <motion.span className="inline-block span-to-change" variants={spanMotion}>Building interactive</motion.span>
                         <br />
                         <span>
-                            <motion.span className="inline-block span-to-change" variants={spanMotion} style={{animation: 'gradientAnimation 10s infinite', backgroundSize: '200% 200%', WebkitTextFillColor: 'transparent', backgroundClip: 'text', backgroundImage: 'linear-gradient(90deg, #d66761 16.66666%, #f5c0b2 33.33333%, #aee8fa 50%, #68bde7 66.66666%, #6bd490 83.33333%, #a2f6cf)'}}>creative</motion.span>
-                            <motion.span className="inline-block span-to-change" variants={spanMotion}>&nbsp;developer</motion.span>
+                            <motion.span className="inline-block span-to-change" variants={spanMotion} style={{animation: 'gradientAnimation 10s infinite', backgroundSize: '200% 200%', WebkitTextFillColor: 'transparent', backgroundClip: 'text', backgroundImage: 'linear-gradient(90deg, #d66761 16.66666%, #f5c0b2 33.33333%, #aee8fa 50%, #68bde7 66.66666%, #6bd490 83.33333%, #a2f6cf)'}}>since</motion.span>
+                            <motion.span className="inline-block span-to-change" variants={spanMotion}>&nbsp;day one</motion.span>
                         </span>
                     </motion.div>
                     <div
@@ -140,29 +140,29 @@ export default function Home(){
                         <div className="text-[84px] text-center leading-none epilogue-bold text-black">
                             <span>This is a bullshit</span>
                             <br />
-                            <span>I am the best</span>
+                            <span>Day one is nothing</span>
                         </div>
                     </div>
                     <motion.div className="relative mt-14 flex justify-center">
                         {[...Array(3)].map((_, i) => (
                             <motion.div
                             key={i}
-                            initial={i == 2 ? {scale: 0.5, opacity: 1} : { scale: 0, opacity: 0 }}
-                            animate={i == 2 ? {scale: 0.5, opacity: 1} : {scale: [0.5, 2, 0.5], opacity: [0.5, 1, 0.5]}}
+                            initial={i === 2 ? {} : { scale: 0, opacity: 0 }}
+                            animate={i === 2 ? {} : { scale: [0.5, 2, 0.5], opacity: [0.5, 1, 0.5] }}
                             transition={{ delay: i * 0.5, duration: 3, repeat: Infinity }}
                             className="absolute w-24 h-24 rounded-full border-4 border-white"
                             style={{
-                                top: `${Math.min(ScrollY, 80 * i)}vh`,
+                                top: `${Math.min(ScrollY, 79 * i)}vh`,
+                                transform: `scale(${i === 2 ? (ScrollY >= 160 ? 1 + ((ScrollY - 160) / 40) * (150/ 6 - 1) : 1) : 1})`,
                             }}
                             />
                         ))}
                     </motion.div>
                 </div>
                 <div 
-                    className="absolute w-full h-[100vh] bottom-0 z-50 gridContainer"
+                    className="absolute w-full bottom-0 gridContainer"
                     style={{
                         opacity: `${ScrollY >= 160 ? '1' : '0'}`,
-                        // clipPath: `circle(${Math.max(2, ScrollY / 1.6)}% at center)`
                         clipPath: `circle(${ScrollY >= 160 ? ((ScrollY - 160) / 40) * 98 + 2 : 2}% at center)`
                     }}>
                     {Array.from({ length: 1200 }).map((_, i) => (

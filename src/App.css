@@ -164,7 +164,7 @@
   background-color: hsla(0, 0%, 98%, 0.1);
 }
 
-body, nav button{
+body, nav button, a{
   cursor: none;
 }
 
