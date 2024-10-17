@@ -182,7 +182,7 @@ export default function Home({ cursorCircle }){
                         clipPath: `circle(${ScrollY >= 160 ? ((ScrollY - 160) / 40) * 98 + 2 : 2}% at center)`
                     }}>
                     {Array.from({ length: 1200 }).map((_, i) => (
-                        <div ref={(el) => gridBox.current[i] = el} key={i} className="border border-white gridBox" style={{backgroundColor: `#000`}} onMouseOver={() => changeBoxColor(i)} onMouseLeave={() => resetBoxColor(i)}></div>
+                        <div ref={(el) => gridBox.current[i] = el} key={i} className="border border-white gridBox" onMouseOver={() => changeBoxColor(i)} onMouseLeave={() => resetBoxColor(i)}></div>
                     ))}
                 </div>
             </div>
