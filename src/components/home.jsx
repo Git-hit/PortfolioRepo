@@ -5,10 +5,10 @@ import { useState, useRef, useEffect } from 'react';
 export default function Home({ cursorCircle }){
     const [ScrollY, setScrollY] = useState(0);
     const hoveredRef = useRef(null);
-    // let cursorCircle = useRef();
     let clipPathElement = useRef(null);
     let animationFrameId = useRef(null);
     const cursorPosition = useRef({x: 0, y: 0});
+    const gridBox = useRef([]);
 
     function showHidden(){
         if(!hoveredRef.current){
@@ -115,9 +115,25 @@ export default function Home({ cursorCircle }){
             window.removeEventListener('wheel', handleWheel)
         }
     }, [ScrollY])
+
+    function changeBoxColor(i){
+        const hex = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f'];
+        let color = '#';
+
+        for(let i = 0; i < 6; i++){
+            color = color + hex[Math.floor(Math.random() * hex.length)];
+        }
+
+        gridBox.current[i].style.transition = '0s';
+        gridBox.current[i].style.backgroundColor = color;
+    }
+
+    function resetBoxColor(i){
+        gridBox.current[i].style.backgroundColor = '#000';
+        gridBox.current[i].style.transition = '3s';
+    }
     return (
         <div onMouseMove={handleMouseMoveOverText} className="relative overflow-hidden h-[280vh]">
-            {/* <div ref={cursorCircle} style={{transform: 'translate(-50%, -50%)', top: '0', left: '0'}} className="z-[1] fixed pointer-events-none cursorCircle transition-all duration-200 bg-[#6bd490] rounded-full h-5 w-5 stroke-black stroke-2"></div> */}
             <Navbar />
             <div className="flex flex-col">
                 <div className="flex flex-col relative text-white mt-28">
@@ -159,14 +175,14 @@ export default function Home({ cursorCircle }){
                         ))}
                     </motion.div>
                 </div>
-                <div 
+                <div
                     className="absolute w-full bottom-0 gridContainer"
                     style={{
                         opacity: `${ScrollY >= 160 ? '1' : '0'}`,
                         clipPath: `circle(${ScrollY >= 160 ? ((ScrollY - 160) / 40) * 98 + 2 : 2}% at center)`
                     }}>
                     {Array.from({ length: 1200 }).map((_, i) => (
-                        <div key={i} className="border border-white"></div>
+                        <div ref={(el) => gridBox.current[i] = el} key={i} className="border border-white gridBox" style={{backgroundColor: `#000`}} onMouseOver={() => changeBoxColor(i)} onMouseLeave={() => resetBoxColor(i)}></div>
                     ))}
                 </div>
             </div>

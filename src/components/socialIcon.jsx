@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 
 export default function SocialIcon({ cursorCircle }){
     const iconRef = useRef([]);
-    const animationFrameId = useRef(null);
+    // const animationFrameId = useRef(null);
 
     const socialLinks = [
         { href: "https://www.linkedin.com/in/ayan-ali-developer/", icon: "fa-brands fa-linkedin-in" },
