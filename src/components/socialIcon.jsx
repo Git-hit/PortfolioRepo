@@ -1,10 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-export default function SocialIcon(){
-    const [iconPos, setIconPos] = useState({top: 0, left: 0});
-    const [mousePos, setMousePos] = useState({clientX: 0, clientY: 0});
-    const [isHovered, setIsHovered] = useState(false);
-    const [hoveredIndex, setHoveredIndex] = useState(null);
+export default function SocialIcon({ cursorCircle }){
+    const iconRef = useRef([]);
+    const animationFrameId = useRef(null);
 
     const socialLinks = [
         { href: "https://www.linkedin.com/in/ayan-ali-developer/", icon: "fa-brands fa-linkedin-in" },
@@ -14,42 +12,32 @@ export default function SocialIcon(){
         { href: "https://stackoverflow.com/users/26530136/ayan-ali", icon: "fa-brands fa-stack-overflow" }
     ];
     
-    function handleMouseEnter(e, index){
-        setIsHovered(true);
-        setMousePos({
-            clientX: e.clientX,
-            clientY: e.clientY
-        })
-        setHoveredIndex(index);
+    function handleMouseMove(e, index){
+        cursorCircle.current.style.width = '40px';
+        cursorCircle.current.style.height = '40px';
+        // if(animationFrameId.current){
+        //     cancelAnimationFrame(animationFrameId.current)
+        // }
+        iconRef.current[index].style.left = `${Math.max(0, Math.min(60, e.clientX))}px`;
+        iconRef.current[index].style.top = `${Math.max(350 + (index * 60), Math.min((index * 60) + 400, e.clientY))}px`;
+        // console.log(e.clientY, 350 + (index * 60), 440 + (index * 40), Math.max(350 + (index * 60), Math.min((index * 60) + 400, e.clientY)), index)
+        // animationFrameId.current = requestAnimationFrame(() => {
+        // })
     }
-
-    function handleMouseMove(e){
-        if(isHovered){
-            setIconPos({
-                top: Math.max(-10, Math.min(10, e.clientY - mousePos.clientY)),
-                left: Math.max(-10, Math.min(10, e.clientX - mousePos.clientX))
-            })
-        }
-    }
-
-    function handleMouseLeave(){
-        setIconPos({
-            top: 0,
-            left: 0
-        })
+    function handleMouseLeave(index){
+        // if(animationFrameId.current){
+        //     cancelAnimationFrame(animationFrameId.current);
+        // }
+        iconRef.current[index].style.left = `30px`;
+        iconRef.current[index].style.top = `unset`;
+        cursorCircle.current.style.width = '20px';
+        cursorCircle.current.style.height = '20px';
     }
     return(
-        <div className="fixed bottom-3 left-3 flex flex-col gap-3">
-            {socialLinks.map(({ href, icon }, index) => (
-                <a
-                    key={index}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={handleMouseLeave}
-                    onMouseEnter={(e) => handleMouseEnter(e, index)}
-                    style={{ position: 'relative', top: `${hoveredIndex === index ? iconPos.top : '0'}px`, left: `${hoveredIndex === index ? iconPos.left : '0'}px` }}
-                    href={href}
-                >
-                    <i className={`text-white border border-white hover:text-black hover:bg-white transition-all duration-300 rounded-full p-3 ${icon}`}></i>
+        <div>
+            {socialLinks.map(({href, icon}, index) => (
+                <a key={index} ref={(el) => iconRef.current[index] = el} href={href}  onMouseMove={(e) => handleMouseMove(e, index)} onMouseLeave={() => handleMouseLeave(index)} className="flex justify-center items-center z-[2] fixed left-[30px]" style={{bottom: `${(socialLinks.length - index + 1) * 60}px`}}>
+                    <i className={`absolute text-white hover:text-black ${icon}`}></i>
                 </a>
             ))}
         </div>

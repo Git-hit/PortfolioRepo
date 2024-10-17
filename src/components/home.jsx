@@ -2,10 +2,10 @@ import { motion } from "framer-motion"
 import Navbar from "./navbar"
 import { useState, useRef, useEffect } from 'react';
 
-export default function Home(){
+export default function Home({ cursorCircle }){
     const [ScrollY, setScrollY] = useState(0);
     const hoveredRef = useRef(null);
-    let cursorCircle = useRef();
+    // let cursorCircle = useRef();
     let clipPathElement = useRef(null);
     let animationFrameId = useRef(null);
     const cursorPosition = useRef({x: 0, y: 0});
@@ -117,7 +117,7 @@ export default function Home(){
     }, [ScrollY])
     return (
         <div onMouseMove={handleMouseMoveOverText} className="relative overflow-hidden h-[280vh]">
-            <div ref={cursorCircle} style={{transform: 'translate(-50%, -50%)', top: '0', left: '0'}} className="z-[1] fixed pointer-events-none cursorCircle transition-all duration-200 bg-[#6bd490] rounded-full h-5 w-5 stroke-black stroke-2"></div>
+            {/* <div ref={cursorCircle} style={{transform: 'translate(-50%, -50%)', top: '0', left: '0'}} className="z-[1] fixed pointer-events-none cursorCircle transition-all duration-200 bg-[#6bd490] rounded-full h-5 w-5 stroke-black stroke-2"></div> */}
             <Navbar />
             <div className="flex flex-col">
                 <div className="flex flex-col relative text-white mt-28">
